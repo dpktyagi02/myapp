@@ -1,0 +1,8 @@
+# configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: data-config
+data:
+  data.json: |
+    [{"id": 1, "name": "Example 1"}, {"id": 2, "name": "Example 2"}]
