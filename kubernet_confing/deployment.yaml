@@ -25,7 +25,7 @@ spec:
             topologyKey: "kubernetes.io/hostname"
       containers:
       - name: frontend
-        image: frontend-image:latest
+        image: python:intervew_project
         ports:
         - containerPort: 80
 
