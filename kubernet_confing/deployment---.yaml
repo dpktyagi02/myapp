@@ -1,0 +1,52 @@
+# deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - frontend
+            topologyKey: "kubernetes.io/hostname"
+      containers:
+      - name: frontend
+        image: pyapp:03
+        ports:
+        - containerPort: 80
+
+---
+# Data Config
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-data
+spec:
+  # ...
+  template:
+    # ...
+    spec:
+      containers:
+      - name: frontend
+        # ...
+        volumeMounts:
+        - name: data-volume
+          mountPath: /app/data
+  volumes:
+  - name: data-volume
+    configMap:
+      name: data-config

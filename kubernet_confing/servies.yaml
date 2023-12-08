@@ -1,21 +1,11 @@
-# service.yaml
 apiVersion: v1
 kind: Service
 metadata:
   name: simple-app
 spec:
   selector:
-    app: simple-app
+    app: your-app-label
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 80
-  type: LoadBalancer
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: simple-app
-  annotations:
-    "sidecar.istio.io/inject": "true"
-
+      targetPort: 8080

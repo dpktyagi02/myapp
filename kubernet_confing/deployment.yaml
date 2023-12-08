@@ -1,4 +1,3 @@
-# deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -13,40 +12,11 @@ spec:
       labels:
         app: frontend
     spec:
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: app
-                operator: In
-                values:
-                - frontend
-            topologyKey: "kubernetes.io/hostname"
       containers:
-      - name: frontend
-        image: python:intervew_project
+      - name: frontend-container
+        image: dpktyagi02/pyapp:03
         ports:
         - containerPort: 80
-
----
-# Data Confing
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: frontend
-spec:
-  # ...
-  template:
-    # ...
-    spec:
-      containers:
-      - name: frontend
-        # ...
-        volumeMounts:
-        - name: data-volume
-          mountPath: /app/data
-  volumes:
-  - name: data-volume
-    configMap:
-      name: data-config
+      volumes:
+      - name: data-volume
+        emptyDir: {}
